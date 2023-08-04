@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipamentos</title>
+</head>
+<body>
+    <h1>Cadastro de Equipamentos</h1>
+
+    <form th:if="${equipamento.id == null}" action="#" th:action="@{/cadastro/salvarEquipamento}" th:object="${equipamento}" method="post">
+        <div>
+            <label>Sala</label>
+            <select th:field="*{sala}">
+                <option th:each="sala : ${salas}" th:value="${sala.id}" th:text="${sala.nome}"></option>
+            </select>
+        </div>
+        <div>
+            <label>IP</label>
+            <input type="text" placeholder="192.168.0.1" th:field="*{ip}">
+        </div>
+        <div>
+            <label>Modelo</label>
+            <select th:field="*{modelo}">
+                <option th:each="modelo : ${modelos}" th:value="${modelo.id}" th:text="${modelo.nome}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Descrição</label>
+            <input type="text" size="50" th:field="*{descricao}">
+        </div>
+
+        <input type="submit" value="Gravar">
+    </form>
+
+    <form th:if="${equipamento.id != null}" action="#" th:action="@{/cadastro/editarEquipamento/{id}(id=${equipamento.id})}" th:object="${equipamento}" method="post">
+        <div>
+            <label>Sala</label>
+            <select th:field="*{sala}">
+                <option th:each="sala : ${salas}" th:value="${sala.id}" th:text="${sala.nome}"></option>
+            </select>
+        </div>
+        <div>
+            <label>IP</label>
+            <input type="text" placeholder="192.168.0.1" th:field="*{ip}">
+        </div>
+        <div>
+            <label>Modelo</label>
+            <select th:field="*{modelo}">
+                <option th:each="modelo : ${modelos}" th:value="${modelo.id}" th:text="${modelo.nome}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Descrição</label>
+            <input type="text" size="50" th:field="*{descricao}">
+        </div>
+
+        <input type="submit" value="Gravar">
+    </form>
+
+    <h1>Listagem de Equipamentos</h1>
+    <table style="border: 1px solid black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sala</th>
+                <th>IP</th>
+                <th>Modelo</th>
+                <th>Descrição</th>
+                <th>Botões</th>
+            </tr>
+        </thead>
+        <tbdoy>
+            <tr th:if="${equipamentos.empty}">
+                <td>Nenhum equipamento foi cadastrado</td>
+            </tr>
+            <tr th:each="equipamento : ${equipamentos}">
+                <td th:text="${equipamento.id}"></td>
+                <td th:text="${equipamento.sala.nome}"></td>
+                <td th:text="${equipamento.ip}"></td>
+                <td th:text="${equipamento.modelo.nome}"></td>
+                <td th:if="${equipamento.descricao.empty}">Vazio</td>
+                <td th:text="${equipamento.descricao}"></td>
+                <td>
+                    <a th:href="@{/comandos/executar(comando='L20', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">20</a>
+                    <a th:href="@{/comandos/executar(comando='L21', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">21</a>
+                    <a th:href="@{/comandos/executar(comando='L22', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">22</a>
+                    <a th:href="@{/comandos/executar(comando='L23', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">23</a>
+                    <a th:href="@{/comandos/executar(comando='L24', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">24</a>
+                    <a th:href="@{/comandos/executar(comando='L25', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">25</a>
+                    <a th:href="@{/comandos/executar(comando='OFF', ip=${equipamento.ip}, modelo=${equipamento.modelo.nome})}">OFF</a>
+                </td>
+                <td>
+                    <a th:href="@{/cadastro/editarEquipamento/{id}(id=${equipamento.id})}">
+                        Editar
+                    </a>
+                    <a th:href="@{/cadastro/apagarEquipamento/{id}(id=${equipamento.id})}"
+                       th:data-confirm-delete="|Você gostaria de apagar o equipamento ${equipamento.ip}?|"
+                       onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Apagar
+                    </a>
+                </td>
+            </tr>
+        </tbdoy>
+    </table>
+    <a href="/">Voltar</a>
+</body>
+</html>

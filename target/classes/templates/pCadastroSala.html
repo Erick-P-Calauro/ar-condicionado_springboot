@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Salas</title>
+</head>
+<body>
+    <h1>Cadastro de Salas</h1>
+    <form action="#" th:if="${sala.id == null}" th:action="@{/cadastro/salvarSala}" th:object="${sala}" method="post">
+        <div>
+            <label>Bloco</label>
+            <select th:field="*{bloco}">
+                <option value="A">Bloco A</option>
+                <option value="B">Bloco B</option>
+                <option value="C">Bloco C</option>
+                <option value="D">Bloco D</option>
+                <option value="E">Bloco E</option>
+                <option value="M">Modulares</option>
+            </select>
+        </div>
+        <div>
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}">
+        </div>
+
+        <input type="submit" value="Gravar">
+    </form>
+
+
+    <form th:if="${sala.id != null}" action="#"  th:action="@{/cadastro/editarSala/{id}(id=${sala.id})}" th:object="${sala}" method="post">
+        <div>
+            <label>Bloco</label>
+            <select th:field="*{bloco}">
+                <option value="A">Bloco A</option>
+                <option value="B">Bloco B</option>
+                <option value="C">Bloco C</option>
+                <option value="D">Bloco D</option>
+                <option value="E">Bloco E</option>
+                <option value="M">Modulares</option>
+            </select>
+        </div>
+        <div>
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}">
+        </div>
+
+        <input type="submit" value="Gravar">
+    </form>
+
+    <h1>Listagem de Salas</h1>
+    <table style="border: 1px solid black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Bloco</th>
+                <th>Botões</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:if="${salas.empty}">
+                <td>Nenhuma Sala foi cadastrada</td>
+            </tr>
+            <tr th:each="sala : ${salas}">
+                <td th:text="${sala.id}"></td>
+                <td th:text="${sala.nome}"></td>
+                <td th:text="${sala.bloco}"></td>
+                <td>
+                    <a th:href="@{/cadastro/editarSala/{id}(id=${sala.id})}">
+                        Editar
+                    </a>
+                    <a th:href="@{/cadastro/apagarSala/{id}(id=${sala.id})}"
+                       th:data-confirm-delete="|Você gostaria de apagar a sala ${sala.nome}?|"
+                       onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Apagar
+                    </a>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/">Voltar</a>
+</body>
+</html>

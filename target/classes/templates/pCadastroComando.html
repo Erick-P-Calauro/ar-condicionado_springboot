@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comandos</title>
+</head>
+<body>
+    <h1>Cadastro de Comandos</h1>
+    <form action="#" th:action="@{/cadastro/salvarComando}" th:object="${comando}" method="post">
+        <div>
+            <label>Modelo : </label>
+            <select th:field="*{modelo}">
+                <option th:each="modelo : ${modelos}" th:value="${modelo.id}" th:text="${modelo.nome}" ></option>
+            </select>
+        </div>
+
+        <div>
+            <label>L20</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L20}"></textarea>
+        </div>
+        <div>
+            <label>L21</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L21}"></textarea>
+        </div>
+        <div>
+            <label>L22</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L22}"></textarea>
+        </div>
+        <div>
+            <label>L23</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L23}"></textarea>
+        </div>
+        <div>
+            <label>L24</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L24}"></textarea>
+        </div>
+        <div>
+            <label>L25</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{L25}"></textarea>
+        </div>
+        <div>
+            <label>OFF</label>
+            <textarea cols="22" rows="1" style="width:70px; height:20px;" th:field="*{OFF}"></textarea>
+        </div>
+
+        <input type="submit" value="Gravar">
+    </form>
+	
+	<h1>Lista de Comandos</h1>
+    <table style="border : 1px solid black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Modelo</th>
+                <th>L20</th>
+                <th>L21</th>
+                <th>L22</th>
+                <th>L23</th>
+                <th>L24</th>
+                <th>L25</th>
+                <th>OFF</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${comandos.empty}">
+                <td>Nenhum comando foi cadastrado</td>
+            </tr>
+            <tr th:each="comando : ${comandos}">
+                <td th:text="${comando.id}"></td>
+                <td th:text="${comando.modelo.nome}"></td>
+                <td th:text="${comando.L20}"></td>
+                <td th:text="${comando.L21}"></td>
+                <td th:text="${comando.L22}"></td>
+                <td th:text="${comando.L23}"></td>
+                <td th:text="${comando.L24}"></td>
+                <td th:text="${comando.L25}"></td>
+                <td th:text="${comando.OFF}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/">Voltar</a>
+</body>
